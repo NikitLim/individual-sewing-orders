@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Defs_IndividualSewing" targetNamespace="http://individual-sewing.example/kt2" exporter="Camunda Modeler" exporterVersion="5.0">
+  <bpmn:process id="Process_Order" name="Оформление заказа на индивидуальный пошив" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Order">
+      <bpmn:lane id="l_customer" name="Заказчик">
+        <bpmn:flowNodeRef>n_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_apply</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_approve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_gw_approve</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="l_manager" name="Мастер-приёмщик">
+        <bpmn:flowNodeRef>n_reg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_measure</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_complete</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_gw_complete</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_materials</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_gw_material</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_cost</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_proposal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_form</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_clarify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_replace</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_change</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="l_tech" name="Конструктор/технолог">
+        <bpmn:flowNodeRef>n_tech</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="l_sewer" name="Исполнитель пошива">
+        <bpmn:flowNodeRef>n_receive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>n_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="n_start" name="Получена заявка"/>
+    <bpmn:task id="n_apply" name="Передать заявку на пошив"/>
+    <bpmn:task id="n_reg" name="Зарегистрировать заказ и клиента"/>
+    <bpmn:task id="n_measure" name="Зафиксировать мерки и требования"/>
+    <bpmn:serviceTask id="n_complete" name="Проверить комплектность заказа"/>
+    <bpmn:exclusiveGateway id="n_gw_complete" name="Данные полные?"/>
+    <bpmn:serviceTask id="n_materials" name="Проверить обеспеченность заказа материалами"/>
+    <bpmn:exclusiveGateway id="n_gw_material" name="Материалы есть?"/>
+    <bpmn:serviceTask id="n_cost" name="Рассчитать стоимость заказа"/>
+    <bpmn:task id="n_tech" name="Подготовить конструкцию и технологию"/>
+    <bpmn:task id="n_proposal" name="Передать проект заказа на согласование"/>
+    <bpmn:task id="n_approve" name="Согласовать стоимость, материалы и срок"/>
+    <bpmn:exclusiveGateway id="n_gw_approve" name="Согласовано?"/>
+    <bpmn:serviceTask id="n_form" name="Сформировать производственное задание"/>
+    <bpmn:task id="n_receive" name="Принять задание в производство"/>
+    <bpmn:endEvent id="n_end" name="Задание передано"/>
+    <bpmn:task id="n_clarify" name="Уточнить недостающие сведения"/>
+    <bpmn:task id="n_replace" name="Уточнить материал или остаток"/>
+    <bpmn:task id="n_change" name="Изменить параметры по замечаниям"/>
+    <bpmn:sequenceFlow id="f_0" sourceRef="n_start" targetRef="n_apply"/>
+    <bpmn:sequenceFlow id="f_1" sourceRef="n_apply" targetRef="n_reg"/>
+    <bpmn:sequenceFlow id="f_2" sourceRef="n_reg" targetRef="n_measure"/>
+    <bpmn:sequenceFlow id="f_3" sourceRef="n_measure" targetRef="n_complete"/>
+    <bpmn:sequenceFlow id="f_4" sourceRef="n_complete" targetRef="n_gw_complete"/>
+    <bpmn:sequenceFlow id="f_5" sourceRef="n_gw_complete" targetRef="n_materials" name="Да"/>
+    <bpmn:sequenceFlow id="f_6" sourceRef="n_gw_complete" targetRef="n_clarify" name="Нет"/>
+    <bpmn:sequenceFlow id="f_7" sourceRef="n_clarify" targetRef="n_measure"/>
+    <bpmn:sequenceFlow id="f_8" sourceRef="n_materials" targetRef="n_gw_material"/>
+    <bpmn:sequenceFlow id="f_9" sourceRef="n_gw_material" targetRef="n_cost" name="Да"/>
+    <bpmn:sequenceFlow id="f_10" sourceRef="n_gw_material" targetRef="n_replace" name="Нет"/>
+    <bpmn:sequenceFlow id="f_11" sourceRef="n_replace" targetRef="n_materials"/>
+    <bpmn:sequenceFlow id="f_12" sourceRef="n_cost" targetRef="n_tech"/>
+    <bpmn:sequenceFlow id="f_13" sourceRef="n_tech" targetRef="n_proposal"/>
+    <bpmn:sequenceFlow id="f_14" sourceRef="n_proposal" targetRef="n_approve"/>
+    <bpmn:sequenceFlow id="f_15" sourceRef="n_approve" targetRef="n_gw_approve"/>
+    <bpmn:sequenceFlow id="f_16" sourceRef="n_gw_approve" targetRef="n_form" name="Да"/>
+    <bpmn:sequenceFlow id="f_17" sourceRef="n_gw_approve" targetRef="n_change" name="Нет"/>
+    <bpmn:sequenceFlow id="f_18" sourceRef="n_change" targetRef="n_measure"/>
+    <bpmn:sequenceFlow id="f_19" sourceRef="n_form" targetRef="n_receive"/>
+    <bpmn:sequenceFlow id="f_20" sourceRef="n_receive" targetRef="n_end"/>
+    <bpmn:dataObject id="d_request_obj" name="Заявка клиента"/>
+    <bpmn:dataObjectReference id="d_request" dataObjectRef="d_request_obj" name="Заявка клиента"/>
+    <bpmn:dataObject id="d_card_obj" name="Карточка клиента и заказа"/>
+    <bpmn:dataObjectReference id="d_card" dataObjectRef="d_card_obj" name="Карточка клиента и заказа"/>
+    <bpmn:dataObject id="d_measures_obj" name="Мерки изделия"/>
+    <bpmn:dataObjectReference id="d_measures" dataObjectRef="d_measures_obj" name="Мерки изделия"/>
+    <bpmn:dataObject id="d_materials_obj" name="Ведомость материалов"/>
+    <bpmn:dataObjectReference id="d_materials" dataObjectRef="d_materials_obj" name="Ведомость материалов"/>
+    <bpmn:dataObject id="d_spec_obj" name="Спецификация заказа"/>
+    <bpmn:dataObjectReference id="d_spec" dataObjectRef="d_spec_obj" name="Спецификация заказа"/>
+    <bpmn:dataObject id="d_task_obj" name="Производственное задание"/>
+    <bpmn:dataObjectReference id="d_task" dataObjectRef="d_task_obj" name="Производственное задание"/>
+    <bpmn:association id="assoc_0" sourceRef="n_apply" targetRef="d_request" associationDirection="None"/>
+    <bpmn:association id="assoc_1" sourceRef="n_reg" targetRef="d_card" associationDirection="None"/>
+    <bpmn:association id="assoc_2" sourceRef="n_measure" targetRef="d_measures" associationDirection="None"/>
+    <bpmn:association id="assoc_3" sourceRef="n_materials" targetRef="d_materials" associationDirection="None"/>
+    <bpmn:association id="assoc_4" sourceRef="n_tech" targetRef="d_spec" associationDirection="None"/>
+    <bpmn:association id="assoc_5" sourceRef="n_form" targetRef="d_task" associationDirection="None"/>
+  </bpmn:process>
+  <bpmn:collaboration id="Collaboration_Order">
+    <bpmn:participant id="Participant_Atelier" name="Ателье / заказчик" processRef="Process_Order"/>
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_Order">
+    <bpmndi:BPMNPlane id="Plane_Order" bpmnElement="Collaboration_Order">
+      <bpmndi:BPMNShape id="shape_Participant_Atelier" bpmnElement="Participant_Atelier" isHorizontal="true">
+        <dc:Bounds x="40" y="40" width="3880" height="900"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_l_customer" bpmnElement="l_customer" isHorizontal="true">
+        <dc:Bounds x="80" y="40" width="3840" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_l_manager" bpmnElement="l_manager" isHorizontal="true">
+        <dc:Bounds x="80" y="245" width="3840" height="320"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_l_tech" bpmnElement="l_tech" isHorizontal="true">
+        <dc:Bounds x="80" y="565" width="3840" height="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_l_sewer" bpmnElement="l_sewer" isHorizontal="true">
+        <dc:Bounds x="80" y="745" width="3840" height="195"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_start" bpmnElement="n_start">
+        <dc:Bounds x="140" y="122" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_apply" bpmnElement="n_apply">
+        <dc:Bounds x="235" y="100" width="205" height="88"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_reg" bpmnElement="n_reg">
+        <dc:Bounds x="500" y="333" width="215" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_measure" bpmnElement="n_measure">
+        <dc:Bounds x="770" y="333" width="220" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_complete" bpmnElement="n_complete">
+        <dc:Bounds x="1050" y="333" width="235" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_gw_complete" bpmnElement="n_gw_complete">
+        <dc:Bounds x="1340" y="349" width="74" height="74"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_materials" bpmnElement="n_materials">
+        <dc:Bounds x="1475" y="333" width="245" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_gw_material" bpmnElement="n_gw_material">
+        <dc:Bounds x="1775" y="349" width="74" height="74"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_cost" bpmnElement="n_cost">
+        <dc:Bounds x="1925" y="333" width="215" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_tech" bpmnElement="n_tech">
+        <dc:Bounds x="2205" y="622" width="230" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_proposal" bpmnElement="n_proposal">
+        <dc:Bounds x="2510" y="333" width="210" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_approve" bpmnElement="n_approve">
+        <dc:Bounds x="2770" y="100" width="225" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_gw_approve" bpmnElement="n_gw_approve">
+        <dc:Bounds x="3050" y="108" width="75" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_form" bpmnElement="n_form">
+        <dc:Bounds x="3175" y="333" width="260" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_receive" bpmnElement="n_receive">
+        <dc:Bounds x="3490" y="774" width="220" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_end" bpmnElement="n_end">
+        <dc:Bounds x="3795" y="795" width="57" height="57"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_clarify" bpmnElement="n_clarify">
+        <dc:Bounds x="1265" y="459" width="225" height="88"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_replace" bpmnElement="n_replace">
+        <dc:Bounds x="1720" y="459" width="240" height="88"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_n_change" bpmnElement="n_change">
+        <dc:Bounds x="2900" y="457" width="220" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_request" bpmnElement="d_request">
+        <dc:Bounds x="230" y="24" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_card" bpmnElement="d_card">
+        <dc:Bounds x="525" y="260" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_measures" bpmnElement="d_measures">
+        <dc:Bounds x="795" y="260" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_materials" bpmnElement="d_materials">
+        <dc:Bounds x="1500" y="260" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_spec" bpmnElement="d_spec">
+        <dc:Bounds x="2230" y="510" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_d_task" bpmnElement="d_task">
+        <dc:Bounds x="3200" y="460" width="150" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_f_0" bpmnElement="f_0">
+        <di:waypoint x="190" y="147.0"/>
+        <di:waypoint x="235" y="144.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_1" bpmnElement="f_1">
+        <di:waypoint x="440" y="144.0"/>
+        <di:waypoint x="470.0" y="144.0"/>
+        <di:waypoint x="470.0" y="380.5"/>
+        <di:waypoint x="500" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_2" bpmnElement="f_2">
+        <di:waypoint x="715" y="380.5"/>
+        <di:waypoint x="770" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_3" bpmnElement="f_3">
+        <di:waypoint x="990" y="380.5"/>
+        <di:waypoint x="1050" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_4" bpmnElement="f_4">
+        <di:waypoint x="1285" y="380.5"/>
+        <di:waypoint x="1340" y="386.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_5" bpmnElement="f_5">
+        <di:waypoint x="1414" y="386.0"/>
+        <di:waypoint x="1475" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_6" bpmnElement="f_6">
+        <di:waypoint x="1377.0" y="423"/>
+        <di:waypoint x="1377.0" y="459"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_7" bpmnElement="f_7">
+        <di:waypoint x="1377.5" y="547"/>
+        <di:waypoint x="1377.5" y="905"/>
+        <di:waypoint x="880.0" y="905"/>
+        <di:waypoint x="880.0" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_8" bpmnElement="f_8">
+        <di:waypoint x="1720" y="380.5"/>
+        <di:waypoint x="1775" y="386.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_9" bpmnElement="f_9">
+        <di:waypoint x="1849" y="386.0"/>
+        <di:waypoint x="1925" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_10" bpmnElement="f_10">
+        <di:waypoint x="1812.0" y="423"/>
+        <di:waypoint x="1812.0" y="459"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_11" bpmnElement="f_11">
+        <di:waypoint x="1840.0" y="547"/>
+        <di:waypoint x="1840.0" y="585"/>
+        <di:waypoint x="1597.5" y="585"/>
+        <di:waypoint x="1597.5" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_12" bpmnElement="f_12">
+        <di:waypoint x="2140" y="380.5"/>
+        <di:waypoint x="2172.5" y="380.5"/>
+        <di:waypoint x="2172.5" y="669.5"/>
+        <di:waypoint x="2205" y="669.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_13" bpmnElement="f_13">
+        <di:waypoint x="2435" y="669.5"/>
+        <di:waypoint x="2472.5" y="669.5"/>
+        <di:waypoint x="2472.5" y="380.5"/>
+        <di:waypoint x="2510" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_14" bpmnElement="f_14">
+        <di:waypoint x="2720" y="380.5"/>
+        <di:waypoint x="2745.0" y="380.5"/>
+        <di:waypoint x="2745.0" y="145.0"/>
+        <di:waypoint x="2770" y="145.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_15" bpmnElement="f_15">
+        <di:waypoint x="2995" y="145.0"/>
+        <di:waypoint x="3050" y="145.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_16" bpmnElement="f_16">
+        <di:waypoint x="3125" y="145.5"/>
+        <di:waypoint x="3150.0" y="145.5"/>
+        <di:waypoint x="3150.0" y="380.5"/>
+        <di:waypoint x="3175" y="380.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_17" bpmnElement="f_17">
+        <di:waypoint x="3087.5" y="183"/>
+        <di:waypoint x="3087.5" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_18" bpmnElement="f_18">
+        <di:waypoint x="3010.0" y="547"/>
+        <di:waypoint x="3010.0" y="905"/>
+        <di:waypoint x="880.0" y="905"/>
+        <di:waypoint x="880.0" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_19" bpmnElement="f_19">
+        <di:waypoint x="3435" y="380.5"/>
+        <di:waypoint x="3462.5" y="380.5"/>
+        <di:waypoint x="3462.5" y="819.0"/>
+        <di:waypoint x="3490" y="819.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_f_20" bpmnElement="f_20">
+        <di:waypoint x="3710" y="819.0"/>
+        <di:waypoint x="3795" y="823.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_0" bpmnElement="assoc_0">
+        <di:waypoint x="337.5" y="144.0"/>
+        <di:waypoint x="305" y="53"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_1" bpmnElement="assoc_1">
+        <di:waypoint x="607.5" y="380.5"/>
+        <di:waypoint x="600" y="289"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_2" bpmnElement="assoc_2">
+        <di:waypoint x="880.0" y="380.5"/>
+        <di:waypoint x="870" y="289"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_3" bpmnElement="assoc_3">
+        <di:waypoint x="1597.5" y="380.5"/>
+        <di:waypoint x="1575" y="289"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_4" bpmnElement="assoc_4">
+        <di:waypoint x="2320.0" y="669.5"/>
+        <di:waypoint x="2305" y="539"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_assoc_5" bpmnElement="assoc_5">
+        <di:waypoint x="3305.0" y="380.5"/>
+        <di:waypoint x="3275" y="489"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

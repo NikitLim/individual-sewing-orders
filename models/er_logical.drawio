@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mxfile host="app.diagrams.net" modified="2026-11-08T00:00:00.000Z" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram id="page-1" name="Модель">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2090" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="customer" value="Заказчик" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="45" y="40" width="340" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="customer_f0" value="PK customer_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="customer">
+          <mxGeometry x="2" y="44" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="customer_f1" value="full_name" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="customer">
+          <mxGeometry x="2" y="71" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="customer_f2" value="phone" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="customer">
+          <mxGeometry x="2" y="98" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="garment" value="Модель изделия" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="45" y="300" width="340" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="garment_f0" value="PK model_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="garment">
+          <mxGeometry x="2" y="44" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="garment_f1" value="name" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="garment">
+          <mxGeometry x="2" y="71" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="garment_f2" value="description" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="garment">
+          <mxGeometry x="2" y="98" width="336" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order" value="Заказ" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="530" y="165" width="390" height="235" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_f0" value="PK order_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order">
+          <mxGeometry x="2" y="44" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_f1" value="FK customer_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order">
+          <mxGeometry x="2" y="71" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_f2" value="FK model_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order">
+          <mxGeometry x="2" y="98" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_f3" value="due_date, status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order">
+          <mxGeometry x="2" y="125" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_f4" value="requirements" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order">
+          <mxGeometry x="2" y="152" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="measurement" value="Мерка заказа" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="28" width="400" height="183" as="geometry"/>
+        </mxCell>
+        <mxCell id="measurement_f0" value="PK measurement_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="measurement">
+          <mxGeometry x="2" y="44" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="measurement_f1" value="FK order_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="measurement">
+          <mxGeometry x="2" y="71" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="measurement_f2" value="name, value_cm" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="measurement">
+          <mxGeometry x="2" y="98" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_material" value="Материал заказа" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="258" width="400" height="208" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_material_f0" value="PK order_material_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_material">
+          <mxGeometry x="2" y="44" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_material_f1" value="FK order_id, FK material_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_material">
+          <mxGeometry x="2" y="71" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_material_f2" value="quantity" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_material">
+          <mxGeometry x="2" y="98" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_material_f3" value="unit_price_kopecks" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_material">
+          <mxGeometry x="2" y="125" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_operation" value="Работа заказа" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="528" width="400" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_operation_f0" value="PK order_operation_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_operation">
+          <mxGeometry x="2" y="44" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_operation_f1" value="FK order_id, FK operation_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_operation">
+          <mxGeometry x="2" y="71" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_operation_f2" value="quantity" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_operation">
+          <mxGeometry x="2" y="98" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="order_operation_f3" value="unit_price_kopecks" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="order_operation">
+          <mxGeometry x="2" y="125" width="396" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="task" value="Производственное задание" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="530" y="520" width="390" height="212" as="geometry"/>
+        </mxCell>
+        <mxCell id="task_f0" value="PK task_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="task">
+          <mxGeometry x="2" y="44" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="task_f1" value="FK order_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="task">
+          <mxGeometry x="2" y="71" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="task_f2" value="issued_at, due_date" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="task">
+          <mxGeometry x="2" y="98" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="task_f3" value="specification" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="task">
+          <mxGeometry x="2" y="125" width="386" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="material" value="Материал" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="258" width="395" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="material_f0" value="PK material_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="material">
+          <mxGeometry x="2" y="44" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="material_f1" value="name, unit" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="material">
+          <mxGeometry x="2" y="71" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="material_f2" value="unit_price_kopecks" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="material">
+          <mxGeometry x="2" y="98" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="material_f3" value="stock_quantity" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="material">
+          <mxGeometry x="2" y="125" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="operation" value="Технологическая операция" style="shape=swimlane;startSize=42;horizontal=1;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#28445E;fillColor=#EEF3FA;swimlaneFillColor=#FFFFFF;fontColor=#17324D;fontFamily=Arial;fontSize=19;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="528" width="395" height="183" as="geometry"/>
+        </mxCell>
+        <mxCell id="operation_f0" value="PK operation_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="operation">
+          <mxGeometry x="2" y="44" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="operation_f1" value="name" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="operation">
+          <mxGeometry x="2" y="71" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="operation_f2" value="base_price_kopecks" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontColor=#263849;spacingLeft=9;" vertex="1" parent="operation">
+          <mxGeometry x="2" y="98" width="391" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="e0" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="customer" target="order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="garment" target="order">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="order" target="measurement">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="order" target="order_material">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="material" target="order_material">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="order" target="order_operation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="operation" target="order_operation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4B6579;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;fontFamily=Arial;fontSize=16;fontColor=#32536A;" edge="1" parent="1" source="order" target="task">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,31 @@
+{
+  "customers": [{"customer_id": 1, "full_name": "Тестовый заказчик", "phone": "не указан"}],
+  "garment_models": [{"model_id": 1, "name": "Женское пальто по меркам", "description": "Однобортное пальто на подкладке"}],
+  "orders": [{"order_id": 1001, "customer_id": 1, "model_id": 1, "due_date": "2026-11-30", "status": "согласован", "requirements": "Тёмно-синее пальто, индивидуальная посадка"}],
+  "measurements": [
+    {"measurement_id": 1, "order_id": 1001, "name": "обхват груди", "value_cm": 92},
+    {"measurement_id": 2, "order_id": 1001, "name": "обхват талии", "value_cm": 74},
+    {"measurement_id": 3, "order_id": 1001, "name": "длина изделия", "value_cm": 104}
+  ],
+  "materials": [
+    {"material_id": 1, "name": "Пальтовая ткань", "unit": "м", "unit_price_kopecks": 230000, "stock_quantity": 12},
+    {"material_id": 2, "name": "Подкладочная ткань", "unit": "м", "unit_price_kopecks": 60000, "stock_quantity": 10},
+    {"material_id": 3, "name": "Пуговицы", "unit": "шт.", "unit_price_kopecks": 15000, "stock_quantity": 15}
+  ],
+  "order_materials": [
+    {"order_material_id": 1, "order_id": 1001, "material_id": 1, "quantity": 3, "unit_price_kopecks": 230000},
+    {"order_material_id": 2, "order_id": 1001, "material_id": 2, "quantity": 2, "unit_price_kopecks": 60000},
+    {"order_material_id": 3, "order_id": 1001, "material_id": 3, "quantity": 5, "unit_price_kopecks": 15000}
+  ],
+  "operations": [
+    {"operation_id": 1, "name": "Конструирование лекал", "base_price_kopecks": 220000},
+    {"operation_id": 2, "name": "Пошив изделия", "base_price_kopecks": 490000},
+    {"operation_id": 3, "name": "Примерка", "base_price_kopecks": 80000}
+  ],
+  "order_operations": [
+    {"order_operation_id": 1, "order_id": 1001, "operation_id": 1, "quantity": 1, "unit_price_kopecks": 220000},
+    {"order_operation_id": 2, "order_id": 1001, "operation_id": 2, "quantity": 1, "unit_price_kopecks": 490000},
+    {"order_operation_id": 3, "order_id": 1001, "operation_id": 3, "quantity": 1, "unit_price_kopecks": 80000}
+  ],
+  "production_tasks": []
+}
