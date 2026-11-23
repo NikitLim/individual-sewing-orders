@@ -136,10 +136,18 @@ def main():
     parser.add_argument('--data', default=str(Path(__file__).with_name('demo_data.json')))
     parser.add_argument('--order', type=int, default=1001)
     args = parser.parse_args()
-    with open(args.data, encoding='utf-8') as stream:
-        data = json.load(stream)
-    demonstrate(data, args.order)
+    try:
+        with open(args.data, encoding='utf-8') as stream:
+            data = json.load(stream)
+    except OSError:
+        parser.error('не удалось открыть файл данных')
+    except UnicodeDecodeError:
+        parser.error('файл данных должен быть в кодировке UTF-8')
+    except json.JSONDecodeError as error:
+        parser.error(f'некорректный JSON (строка {error.lineno}, столбец {error.colno})')
+    task = demonstrate(data, args.order)
+    return 0 if task['ok'] else 1
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
