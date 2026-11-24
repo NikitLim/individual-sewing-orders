@@ -1,6 +1,7 @@
 """КТ2: процедурная модель оформления индивидуального заказа (Python 3.12)."""
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 
 
@@ -98,7 +99,7 @@ def form_production_task(data, order_id, required_measurements):
     customer = find_by_id(data['customers'], order['customer_id'], 'customer_id')
     model = find_by_id(data['garment_models'], order['model_id'], 'model_id')
     result = {'task_id': max((t['task_id'] for t in data['production_tasks']), default=0) + 1,
-              'order_id': order_id, 'issued_at': '2026-11-08',
+              'order_id': order_id, 'issued_at': date.today().isoformat(),
               'due_date': order['due_date'],
               'specification': 'Изделие: ' + model['name'] +
                                '; клиент: ' + customer['full_name'] +
@@ -124,6 +125,7 @@ def demonstrate(data, order_id):
     task = form_production_task(data, order_id, required)
     if task['ok']:
         print('Производственное задание №', task['task']['task_id'], 'сформировано')
+        print('Дата выдачи:', task['task']['issued_at'])
         print('Срок:', task['task']['due_date'])
         print('Описание:', task['task']['specification'])
     else:

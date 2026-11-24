@@ -4,7 +4,9 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
+from unittest.mock import patch
 from main import (check_order_completeness, check_material_availability,
                   calculate_order_cost, form_production_task)
 
@@ -35,6 +37,15 @@ class ProceduralChecks(unittest.TestCase):
         self.data['orders'][0]['status'] = 'проект'
         self.assertFalse(form_production_task(self.data, 1001, self.required)['ok'])
 
+    def test_task_uses_local_issue_date(self):
+        issue_date = date(2026, 11, 24)
+        with patch('main.date') as calendar:
+            calendar.today.return_value = issue_date
+            result = form_production_task(self.data, 1001, self.required)
+        self.assertTrue(result['ok'])
+        self.assertEqual(result['task']['issued_at'], issue_date.isoformat())
+        self.assertEqual(result['task']['due_date'], self.data['orders'][0]['due_date'])
+
 
 class CommandLineChecks(unittest.TestCase):
     def run_cli(self, *args):
@@ -44,7 +55,9 @@ class CommandLineChecks(unittest.TestCase):
         )
 
     def test_exit_code_reports_whether_task_was_created(self):
-        self.assertEqual(self.run_cli().returncode, 0)
+        completed = self.run_cli()
+        self.assertEqual(completed.returncode, 0)
+        self.assertRegex(completed.stdout, r'Дата выдачи: \d{4}-\d{2}-\d{2}')
         rejected = self.run_cli('--order', '-1')
         self.assertEqual(rejected.returncode, 1)
         self.assertIn('Задание не сформировано: Заказ не найден', rejected.stdout)
