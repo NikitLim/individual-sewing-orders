@@ -1,0 +1,193 @@
+@startuml
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+hide empty members
+class Customer <<record>> {
+  -id : long
+  -name : String
+  -phone : String
+  +id() : long
+  +name() : String
+  +phone() : String
+}
+class GarmentModel <<record>> {
+  -id : long
+  -name : String
+  -description : String
+  +id() : long
+  +name() : String
+  +description() : String
+}
+class Order <<record>> {
+  -id : long
+  -customerId : long
+  -modelId : long
+  -dueDate : LocalDate
+  -status : String
+  -requirements : String
+  -measurements : List<Measurement>
+  -materials : List<OrderMaterial>
+  -operations : List<OrderOperation>
+  +id() : long
+  +customerId() : long
+  +modelId() : long
+  +dueDate() : LocalDate
+  +status() : String
+  +requirements() : String
+  +measurements() : List<Measurement>
+  +materials() : List<OrderMaterial>
+  +operations() : List<OrderOperation>
+}
+class Measurement <<record>> {
+  -id : long
+  -orderId : long
+  -name : String
+  -valueCm : BigDecimal
+  +id() : long
+  +orderId() : long
+  +name() : String
+  +valueCm() : BigDecimal
+}
+class Material <<record>> {
+  -id : long
+  -name : String
+  -unit : String
+  -priceKopecks : long
+  -stock : BigDecimal
+  +id() : long
+  +name() : String
+  +unit() : String
+  +priceKopecks() : long
+  +stock() : BigDecimal
+}
+class Operation <<record>> {
+  -id : long
+  -name : String
+  -basePriceKopecks : long
+  +id() : long
+  +name() : String
+  +basePriceKopecks() : long
+}
+class ProductionTask <<record>> {
+  -id : long
+  -orderId : long
+  -issuedAt : LocalDate
+  -dueDate : LocalDate
+  -specification : String
+  +id() : long
+  +orderId() : long
+  +issuedAt() : LocalDate
+  +dueDate() : LocalDate
+  +specification() : String
+}
+abstract class OrderLine {
+  -id : long
+  -orderId : long
+  -quantity : BigDecimal
+  -unitPriceKopecks : long
+  ~id() : long
+  ~orderId() : long
+  ~quantity() : BigDecimal
+  ~subtotal() : BigDecimal
+  {abstract} ~label() : String
+}
+class OrderMaterial {
+  -materialId : long
+  ~materialId() : long
+  ~label() : String
+  ~hasEnoughStock(material : Material) : boolean
+}
+class OrderOperation {
+  -operationId : long
+  ~operationId() : long
+  ~label() : String
+}
+interface OrderCheck {
+  +check(order : Order, data : OrderData) : CheckResult
+}
+class CompletenessCheck {
+  -required : List<String>
+  +check(order : Order, data : OrderData) : CheckResult
+}
+class MaterialAvailabilityCheck {
+  +check(order : Order, data : OrderData) : CheckResult
+}
+class CheckResult <<record>> {
+  -title : String
+  -problems : List<String>
+  -failureReason : String
+  +title() : String
+  +problems() : List<String>
+  +failureReason() : String
+  ~passed() : boolean
+}
+class OrderService {
+  -checks : List<OrderCheck>
+  -clock : Clock
+  ~evaluate(order : Order, data : OrderData) : OrderResult
+  -sum(lines : List<? extends OrderLine>) : BigDecimal
+}
+class OrderResult <<record>> {
+  -checks : List<CheckResult>
+  -cost : Cost
+  -task : ProductionTask
+  -failureReason : String
+  +checks() : List<CheckResult>
+  +cost() : Cost
+  +task() : ProductionTask
+  +failureReason() : String
+  ~accepted() : boolean
+}
+class Cost <<record>> {
+  -materials : BigDecimal
+  -operations : BigDecimal
+  +materials() : BigDecimal
+  +operations() : BigDecimal
+  ~total() : BigDecimal
+}
+class OrderData <<record>> {
+  -customers : List<Customer>
+  -models : List<GarmentModel>
+  -orders : List<Order>
+  -materials : List<Material>
+  -operations : List<Operation>
+  -tasks : List<ProductionTask>
+  +customers() : List<Customer>
+  +models() : List<GarmentModel>
+  +orders() : List<Order>
+  +materials() : List<Material>
+  +operations() : List<Operation>
+  +tasks() : List<ProductionTask>
+  {static} ~load(folder : Path) : OrderData
+  {static} -load(folder : Path, name : String, width : int, decode : Function) : List<T>
+  {static} -id(cells : String[], index : int) : long
+}
+class Main {
+  {static} +main(args : String[]) : void
+  {static} -run(args : String[]) : int
+  {static} -rubles(kopecks : BigDecimal) : String
+}
+Order "0..*" --> "0..1" Customer : customerId
+Order "0..*" --> "0..1" GarmentModel : modelId
+Order "1" *-- "0..*" Measurement
+Order "1" *-- "0..*" OrderMaterial
+Order "1" *-- "0..*" OrderOperation
+OrderLine <|-- OrderMaterial
+OrderLine <|-- OrderOperation
+OrderMaterial "0..*" --> "0..1" Material : materialId
+OrderOperation "0..*" --> "0..1" Operation : operationId
+ProductionTask "0..*" --> "1" Order : orderId
+OrderService "1" o-- "1..*" OrderCheck
+OrderCheck <|.. CompletenessCheck
+OrderCheck <|.. MaterialAvailabilityCheck
+OrderCheck ..> CheckResult
+OrderService ..> OrderResult
+OrderResult "1" *-- "1" Cost
+OrderResult "1" *-- "0..*" CheckResult
+OrderResult "1" --> "0..1" ProductionTask
+OrderData "1" o-- "0..*" Order
+OrderService ..> OrderData
+Main ..> OrderService
+Main ..> OrderData
+@enduml

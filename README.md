@@ -32,3 +32,9 @@ python -m unittest -v test_main.py
 КТ3 предполагает ООП-реализацию на Java 21 (JDK 21).
 
 История изменений ведётся в Git; даты коммитов сохраняются без изменений.
+
+## КТ3 — объектно-ориентированная реализация
+
+- [Java-код и команды запуска](src/java/README.md).
+- [Диаграмма классов UML](models/classes.png) и [исходник PlantUML](models/classes.puml).
+- [Форма взаимной рецензии](review/review.md).
